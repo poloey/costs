@@ -24,12 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
-        $price_array = Item::all()->pluck('price')->toArray();
-        $total_cost = array_reduce($price_array, function($v1, $v2) {
-            return $v1 + $v2;
-        });
-        $items = Item::all();
-        return view('home', compact('items', 'total_cost'));
+        return redirect(route('items.index'));
     }
 }

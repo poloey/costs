@@ -16,10 +16,18 @@ class ItemController extends Controller
      */
     public function index()
     {
-      $price_array = Item::all()->pluck('price')->toArray();
+        $items = Item::with('category')->filter(request(['category']))->orderBy('created_at', 'desc')->paginate(5);
+        $categories = Category::all();
+        $price_array = $items->pluck('price')->toArray();
         $total_cost = array_sum($price_array);
-        $items = Item::all();
-        return view('home', compact('items', 'total_cost'));
+        return view('home', compact('items', 'total_cost', 'categories'));
+    }
+    public function hello () {
+      // return Post::with('labels', 'user', 'userBookmarked', 'userUpvotes', 'discussions')
+      // ->filter(request(['type', 'label', 'postUserId', 'startDate', 'endDate']))
+      // ->orderBy('created_at', 'desc')
+      // ->paginate(5);
+      return Item::with('category')->filter(request(['category']))->orderBy('created_at', 'desc')->paginate(5);
     }
 
     /**
