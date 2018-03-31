@@ -17,28 +17,29 @@
                     <p>{{Session::get('message')}}</p>
                 </div>
             @endif
-            <form method="post" action="{{route('items.store')}}">
+            <form method="post" action="{{route('items.update', $item->id)}}">
                 @csrf
+                @method('put')
                 <div class="form-group">
                     <label for="category">Choose a category</label>
                     <select class="form-control" name="category" id="category">
                         @foreach($categories as $category)
-                            <option value="{{$category->id}}">{{$category->name}}</option>
+                            <option value="{{$category->id}}" {{$category->id == $item->category->id ? 'selected' : 'notselected' }}>{{$category->name}}</option>
                         @endforeach
                     </select>
                 </div>
                 <div class="form-group">
                     <label for="name">Name</label>
-                    <input type="text" name="name" id="name" class="form-control">
+                    <input value="{{$item->name}}" type="text" name="name" id="name" class="form-control">
                 </div>
                 <div class="form-group">
                     <label for="description">Description</label>
-                    <input type="text" name="description" id="description" class="form-control">
+                    <input value="{{$item->description}}" type="text" name="description" id="description" class="form-control">
                 </div>
                 
                 <div class="form-group">
                     <label for="price">Price</label>
-                    <input type="text" name="price" id="price" class="form-control">
+                    <input type="text" value="{{$item->price}}" name="price" id="price" class="form-control">
                 </div>
                 <div class="form-group">
                     <button type="submit" class="btn btn-ouline-info">Add item</button>

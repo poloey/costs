@@ -12,11 +12,13 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return redirect(route('items.index'));
 });
 
-Route::get('items/create', 'ItemController@create')->name('items.create');
-Route::post('items', 'ItemController@store')->name('items.store');
+Route::group(['middleware' => 'auth'], function () {
+  Route::resource('items', 'ItemController');
+});
+
 
 Auth::routes();
 
