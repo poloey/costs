@@ -16,6 +16,11 @@ class Item extends Model
         $query->where('category_id', $filters['category']);
       }
 
+      if (isset($filters['query'])) {
+        $query->where('name', 'like',  "%{$filters['query']}%")
+        ->orWhere('description', 'like',  "%{$filters['query']}%");
+      }
+
 
       if (isset($filters['start']) && isset($filters['end']) && !empty($filters['start']) && !empty($filters['end'])  ) {
         $start = Carbon::parse($filters['start'])->toDateString();

@@ -29,7 +29,7 @@ class ItemController extends Controller
             $end = Carbon::parse(request('end'))->toDateString();
         }
         // return request('start');
-        $items = Item::with('category')->filter(request(['category', 'start', 'end']))->orderBy('created_at', 'desc')->paginate(30);
+        $items = Item::with('category')->filter(request(['category', 'start', 'end', 'query']))->orderBy('created_at', 'desc')->paginate(30);
         $categories = Category::all();
         $price_array = $items->pluck('price')->toArray();
         $total_cost = array_sum($price_array);

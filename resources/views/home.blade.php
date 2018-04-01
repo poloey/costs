@@ -8,6 +8,20 @@
             <label for="end">End Date</label><input value="{{$end}}" class="mx-3" id="end" name="end" data-toggle="datepicker">
             <button type="submit" class="btn btn-sm btn-outline-info">Filter</button>
         </form>
+        <div class="row">
+            <div class="col-md-6 my-3">
+                <form action="{{route('items.index')}}">
+                    <div class="form-control">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="query">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn">search</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-8">
