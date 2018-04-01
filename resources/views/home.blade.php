@@ -39,35 +39,37 @@
                         </div>
                     @endif
 
-                    <table class="table table-bordered">
-                        <tr>
-                            <th>Item</th>
-                            <th>Category</th>
-                            <th>Price</th>
-                        </tr>
-                        @foreach($items as $item)
-                        <tr>
-                            <td>
-                                {{$item->name}}
-                                <a class="badge badge-primary" style="cursor: pointer;" href="{{route('items.show', $item->id)}}">view</a>
-                                <a class="badge badge-info" style="cursor: pointer;" href="{{route('items.edit', $item->id)}}">edit</a>
-                                <form method="post" class="d-inline-block" action="{{route('items.destroy', $item->id)}}">
-                                    @csrf
-                                    @method('delete')
-                                    <button style="outline: none; border: none; cursor: pointer;" class="badge badge-danger" type="sumit">Delete</button>
-                                </form>
-                            </td>
-                            <td>
-                                {{$item->category->name}}
-                            </td>
-                            <td>{{$item->price}}</td>
-                        </tr>
-                        @endforeach
-                        <tr>
-                            <th colspan="2">total_cost</th>
-                            <th>{{$total_cost}}</th>
-                        </tr>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <tr>
+                                <th>Item</th>
+                                <th>Category</th>
+                                <th>Price</th>
+                            </tr>
+                            @foreach($items as $item)
+                            <tr>
+                                <td>
+                                    {{$item->name}}
+                                    <a class="badge badge-primary" style="cursor: pointer;" href="{{route('items.show', $item->id)}}">view</a>
+                                    <a class="badge badge-info" style="cursor: pointer;" href="{{route('items.edit', $item->id)}}">edit</a>
+                                    <form method="post" class="d-inline-block" action="{{route('items.destroy', $item->id)}}">
+                                        @csrf
+                                        @method('delete')
+                                        <button style="outline: none; border: none; cursor: pointer;" class="badge badge-danger" type="sumit">Delete</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    {{$item->category->name}}
+                                </td>
+                                <td>{{$item->price}}</td>
+                            </tr>
+                            @endforeach
+                            <tr>
+                                <th colspan="2">total_cost</th>
+                                <th>{{$total_cost}}</th>
+                            </tr>
+                        </table>
+                    </div>
                     <div>
                         {{$items->links()}}
                     </div>
