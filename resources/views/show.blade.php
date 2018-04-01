@@ -5,7 +5,11 @@
     <div class="card mt-5">
         <div class="card-header">Dashboard</div>
         <div class="card-body">
-            <p><strong>Name:</strong> {{$item->name}} - <span class="badge badge-primary">{{$item->category->name}}</span></p>
+            <p>
+              <strong>Name:</strong> {{$item->name}} -
+              <span class="badge badge-primary">{{$item->category->name}}</span>
+              <small>{{$item->created_at->toFormattedDateString()}} ( {{$item->created_at->diffForHumans()}} ) </small>
+            </p>
             <p>{{$item->description}}</p>
             <p>BDT {{$item->price}}</p>
         </div>

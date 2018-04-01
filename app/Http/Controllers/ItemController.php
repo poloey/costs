@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Item;
 use App\Category;
 use Session;
@@ -16,18 +17,24 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::with('category')->filter(request(['category']))->orderBy('created_at', 'desc')->paginate(5);
+        /**
+         * only for showing inside date time picker 
+         */
+        $start = '';
+        $end = '';
+        if (request('start')) {
+            $start = Carbon::parse(request('start'))->toDateString();
+        }
+        if (request('end')) {
+            $end = Carbon::parse(request('end'))->toDateString();
+        }
+        // return request('start');
+        $items = Item::with('category')->filter(request(['category', 'start', 'end']))->orderBy('created_at', 'desc')->paginate(30);
         $categories = Category::all();
         $price_array = $items->pluck('price')->toArray();
         $total_cost = array_sum($price_array);
-        return view('home', compact('items', 'total_cost', 'categories'));
-    }
-    public function hello () {
-      // return Post::with('labels', 'user', 'userBookmarked', 'userUpvotes', 'discussions')
-      // ->filter(request(['type', 'label', 'postUserId', 'startDate', 'endDate']))
-      // ->orderBy('created_at', 'desc')
-      // ->paginate(5);
-      return Item::with('category')->filter(request(['category']))->orderBy('created_at', 'desc')->paginate(5);
+
+        return view('home', compact('items', 'total_cost', 'categories', 'start', 'end'));
     }
 
     /**

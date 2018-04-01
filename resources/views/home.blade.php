@@ -2,7 +2,14 @@
 
 @section('content')
 <div class="container">
-    <div class="row mt-4">
+    <div class="my-3">
+        <form action="{{route('items.index')}}">
+            <label for="start">Start date</label><input value="{{$start}}" class="mx-3" id="start" name="start" data-toggle="datepicker">
+            <label for="end">End Date</label><input value="{{$end}}" class="mx-3" id="end" name="end" data-toggle="datepicker">
+            <button type="submit" class="btn btn-sm btn-outline-info">Filter</button>
+        </form>
+    </div>
+    <div class="row">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">Dashboard</div>
@@ -62,7 +69,11 @@
                 <div class="card-body">
                     <ul class="list-group">
                         @foreach($categories as $category)
-                            <li class="list-group-item"><a href="{{route('items.index', ['category' => $category->id])}}">{{$category->name}}</a></li>
+                            <li class="list-group-item">
+                                <a href="{{route('items.index', ['category' => $category->id, 'start' => $start, 'end' => $end])}}">
+                                    {{$category->name}}
+                                </a>
+                            </li>
                         @endforeach
                     </ul>
                 </div>
@@ -73,4 +84,13 @@
 
 
 </div>
+@endsection
+
+
+@section('script')
+<script>
+    $('[data-toggle="datepicker"]').datepicker({
+      format: 'yyyy-mm-dd'
+    });
+</script>
 @endsection

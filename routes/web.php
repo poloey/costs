@@ -19,7 +19,6 @@ Route::group(['middleware' => 'auth'], function () {
   Route::resource('items', 'ItemController');
 });
 
-Route::get('hello', 'ItemController@hello');
 
 
 Auth::routes();
