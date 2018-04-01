@@ -52,7 +52,7 @@
                                     {{$item->name}}
                                     <a class="badge badge-primary" style="cursor: pointer;" href="{{route('items.show', $item->id)}}">view</a>
                                     <a class="badge badge-info" style="cursor: pointer;" href="{{route('items.edit', $item->id)}}">edit</a>
-                                    <form method="post" class="d-inline-block" action="{{route('items.destroy', $item->id)}}">
+                                    <form method="post" class="d-none" action="{{route('items.destroy', $item->id)}}">
                                         @csrf
                                         @method('delete')
                                         <button style="outline: none; border: none; cursor: pointer;" class="badge badge-danger" type="sumit">Delete</button>
@@ -78,6 +78,19 @@
             
         </div>
         <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h2>Pagination</h2>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{Request::url()}}?paginate=10000">All item</a></li>
+                        <li class="list-group-item"><a href="{{Request::url()}}?paginate=50">50 item</a></li>
+                        <li class="list-group-item"><a href="{{Request::url()}}?paginate=100">100 item</a></li>
+                        <li class="list-group-item"><a href="{{Request::url()}}?paginate=200">200 item</a></li>
+                    </ul>
+                </div>
+            </div>
             <div class="card">
                 <div class="card-header">
                     <h2>Category</h2>
