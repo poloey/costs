@@ -17,6 +17,7 @@ class ItemController extends Controller
      */
     public function index()
     {
+
         /**
          * only for showing inside date time picker 
          */
@@ -28,8 +29,9 @@ class ItemController extends Controller
         if (request('end')) {
             $end = Carbon::parse(request('end'))->toDateString();
         }
+        $paginate = request('paginate') ?? 30;
         // return request('start');
-        $items = Item::with('category')->filter(request(['category', 'start', 'end', 'query']))->orderBy('created_at', 'desc')->paginate(30);
+        $items = Item::with('category')->filter(request(['category', 'start', 'end', 'query']))->orderBy('created_at', 'desc')->paginate($paginate);
         $categories = Category::all();
         $price_array = $items->pluck('price')->toArray();
         $total_cost = array_sum($price_array);
@@ -44,7 +46,9 @@ class ItemController extends Controller
      */
     public function create()
     {
-
+        if (auth()->id() > 1) {
+            return redirect(route('items.index'));
+        }
         return view('create', ['categories' => Category::all()]);
     }
 
@@ -89,6 +93,9 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
+        if (auth()->id() > 1) {
+            return redirect(route('items.index'));
+        }
         return view('edit', ['categories' => Category::all(), 'item' => $item]);
     }
 
@@ -101,6 +108,9 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
+        if (auth()->id() > 1) {
+            return redirect(route('items.index'));
+        }
         $this->validate($request, [
             'name' => 'required|min:2',
             'price' => 'required|numeric',
@@ -124,6 +134,9 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
+        if (auth()->id() > 1) {
+            return redirect(route('items.index'));
+        }
         $item->delete();
         Session::flash('message', 'Item deleted successfully');
         return redirect()->back();
