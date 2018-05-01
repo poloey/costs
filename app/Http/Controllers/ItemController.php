@@ -31,7 +31,7 @@ class ItemController extends Controller
         }
         $paginate = request('paginate') ?? 30;
         // return request('start');
-        $items = Item::with('category')->filter(request(['category', 'start', 'end', 'query']))->orderBy('created_at', 'desc')->paginate($paginate);
+        $items = Item::with('category')->filter(request(['category', 'start', 'end', 'query']))->where('user_id', auth()->id())->orderBy('created_at', 'desc')->paginate($paginate);
         $categories = Category::all();
         $price_array = $items->pluck('price')->toArray();
         $total_cost = array_sum($price_array);
@@ -68,7 +68,8 @@ class ItemController extends Controller
             'name' => $request->input('name'),
             'description' => $request->input('description'),
             'price' => $request->input('price'),
-            'category_id' => $request->input('category')
+            'category_id' => $request->input('category'),
+            'user_id' => auth()->id()
         ]);
         Session::flash('message', 'Item added successfully');
         return redirect()->back();

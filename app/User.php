@@ -17,6 +17,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+    public function items()
+    {
+      return $this->hasMany(Item::class);
+    }
 
     /**
      * The attributes that should be hidden for arrays.
