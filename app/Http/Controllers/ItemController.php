@@ -91,9 +91,6 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        if (auth()->id() > 1) {
-            return redirect(route('items.index'));
-        }
         return view('edit', ['categories' => Category::all(), 'item' => $item]);
     }
 
@@ -106,9 +103,6 @@ class ItemController extends Controller
      */
     public function update(Request $request, Item $item)
     {
-        if (auth()->id() > 1) {
-            return redirect(route('items.index'));
-        }
         $this->validate($request, [
             'name' => 'required|min:2',
             'price' => 'required|numeric',
@@ -132,9 +126,6 @@ class ItemController extends Controller
      */
     public function destroy(Item $item)
     {
-        if (auth()->id() > 1) {
-            return redirect(route('items.index'));
-        }
         $item->delete();
         Session::flash('message', 'Item deleted successfully');
         return redirect()->back();
