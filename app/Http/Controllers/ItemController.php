@@ -46,9 +46,6 @@ class ItemController extends Controller
      */
     public function create()
     {
-        if (auth()->id() > 1) {
-            return redirect(route('items.index'));
-        }
         return view('create', ['categories' => Category::all()]);
     }
 
